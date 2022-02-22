@@ -7,21 +7,23 @@ import PokemonList from "../components/PokemonList";
 
 export default function PokedexScreen() {
   const [pokemons, setPokemons] = useState([]);
+  const [nextUrl, setNextUrl] = useState(null);
+
   const loadPokemons = async () => {
     try {
-      const response = await getPokemonsApi();
+      const response = await getPokemonsApi(nextUrl);
       const pokemonsArray = [];
 
       for await (const pokemon of response.results) {
         const pokemonDetails = await getPokemonDetailsByUrlApi(pokemon.url);
-
+        setNextUrl(response.next);
         pokemonsArray.push({
           id: pokemonDetails.id,
           name: pokemonDetails.name,
-          type: pokemonDetails.types[0].type.name,
+          type1: pokemonDetails.types[0].type.name,
+          type2: pokemonDetails.types[1]?.type?.name,
           order: pokemonDetails.order,
-          image:
-            pokemonDetails.sprites.other["official-artwork"].front_default,
+          image: pokemonDetails.sprites.other["official-artwork"].front_default,
         });
       }
 
@@ -39,7 +41,11 @@ export default function PokedexScreen() {
 
   return (
     <SafeAreaView>
-      <PokemonList pokemons={pokemons} />
+      <PokemonList
+        pokemons={pokemons}
+        loadPokemons={loadPokemons}
+        isNext={nextUrl}
+      />
     </SafeAreaView>
   );
 }

@@ -41,14 +41,18 @@ export default function NavigationTab() {
   return (
     <Tab.Navigator screenOptions={screenOptions}>
       <Tab.Screen
-        name="Pokedex"
-        component={PokedexNavigation}
-        options={{ tabBarLabel: "", tabBarIcon: () => renderPokeBal() }}
-      />
-      <Tab.Screen
         name="Favorites"
         component={FavoritesScreen}
         options={{ tabBarLabel: "Favoritos", headerTitle: "Favoritos" }}
+      />
+      <Tab.Screen
+        name="Pokedex"
+        component={PokedexNavigation}
+        options={{
+          tabBarLabel: "",
+          tabBarIcon: () => renderPokeBal(),
+          headerShown: false,
+        }}
       />
       <Tab.Screen
         name="Account"
