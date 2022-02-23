@@ -1,13 +1,63 @@
-import { View, Text } from 'react-native';
-import React from 'react';
+import { ScrollView, Text } from "react-native";
+import React, { useState, useEffect } from "react";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
-export default function PokemonScreen() {
+import { getPokemonDetailsApi } from "../api/pokemon";
+import { getColorByPokemonType } from "../utils/getColorByPokemonType";
+
+import Header from "../components/Pokemon/Header";
+import Type from "../components/Pokemon/Type";
+import Stats from "../components/Pokemon/Stats";
+
+export default function PokemonScreen({ route: { params }, navigation }) {
+  const [pokemon, setPokemon] = useState(null);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRigth: () => null,
+      headerLeft: () => (
+        <Ionicons
+          name="arrow-back"
+          size={20}
+          color="white"
+          style={{ marginLeft: 20 }}
+          onPress={navigation.goBack}
+        />
+      ),
+    });
+  }, [navigation, params]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await getPokemonDetailsApi(params.id);
+        setPokemon(response);
+      } catch (error) {
+        navigation.goBack();
+      }
+    })();
+  }, [params]);
+
+  if (!pokemon) return null;
+
   return (
-    <View>
-      <Text>Pokemon</Text>
-      <Text>Pokemon</Text>
-      <Text>Pokemon</Text>
-      <Text>Pokemon</Text>
-    </View>
+    <ScrollView>
+      <Header
+        id={pokemon.id}
+        image={pokemon.sprites.other["official-artwork"].front_default}
+        name={pokemon.name}
+        order={pokemon.order}
+        type1={pokemon.types[0].type.name}
+        type2={pokemon.types[1]?.type?.name}
+      />
+      <Type
+        type1={pokemon.types[0].type.name}
+        type2={pokemon.types[1]?.type?.name}
+      />
+      <Stats
+        stats={pokemon.stats}
+        barColor={getColorByPokemonType(pokemon.types[0].type.name)}
+      />
+    </ScrollView>
   );
 }

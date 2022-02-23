@@ -7,14 +7,18 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { useNavigation } from "@react-navigation/native";
 
-import getColorsByPokemonType from "../utils/getColorByPokemonType";
+import { getColorsByPokemonType } from "../utils/getColorByPokemonType";
 
 export default function PokemonCard({ pokemon }) {
+  const navigation = useNavigation();
+
   const pokemonColor = getColorsByPokemonType(pokemon.type1, pokemon.type2);
 
   const goToPokemon = () => {
     console.log(`Vamos al pokemon: ${pokemon.name}`);
+    navigation.navigate("Pokemon", { id: pokemon.id });
   };
 
   return (
@@ -26,9 +30,7 @@ export default function PokemonCard({ pokemon }) {
             colors={pokemonColor}
             style={styles.bgStyles}
           >
-            <Text style={styles.number}>
-              #{`${pokemon.id}`.padStart(3, 0)}
-            </Text>
+            <Text style={styles.number}>#{`${pokemon.id}`.padStart(3, 0)}</Text>
             <Text style={styles.name}>{pokemon.name}</Text>
             <Image source={{ uri: pokemon.image }} style={styles.image} />
           </LinearGradient>
