@@ -17,7 +17,6 @@ export default function PokemonCard({ pokemon }) {
   const pokemonColor = getColorsByPokemonType(pokemon.type1, pokemon.type2);
 
   const goToPokemon = () => {
-    console.log(`Vamos al pokemon: ${pokemon.name}`);
     navigation.navigate("Pokemon", { id: pokemon.id });
   };
 

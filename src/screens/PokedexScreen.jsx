@@ -29,7 +29,7 @@ export default function PokedexScreen() {
 
       setPokemons([...pokemons, ...pokemonsArray]);
     } catch (error) {
-      console.error(error);
+      throw error;
     }
   };
 

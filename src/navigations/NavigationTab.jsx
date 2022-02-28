@@ -10,6 +10,7 @@ import FavoritesScreen from "../screens/FavoritesScreen";
 import AccountScreen from "../screens/AccountScreen";
 
 import { getRamdomPokemonColorType } from "../utils/getColorByPokemonType";
+import FavoriteNavigation from "./FavoriteNavigation";
 
 const Tab = createBottomTabNavigator();
 
@@ -32,7 +33,6 @@ export default function NavigationTab() {
       } else if (route.name === "Favorites") {
         iconName = focused ? "heart" : "heart-outline";
       }
-      // invert-mode girar 90° y queda como pokeball
       return <Ionicons name={iconName} size={size} color={color} />;
     },
     tabBarActiveTintColor: getRamdomPokemonColorType(),
@@ -44,8 +44,12 @@ export default function NavigationTab() {
     <Tab.Navigator screenOptions={screenOptions}>
       <Tab.Screen
         name="Favorites"
-        component={FavoritesScreen}
-        options={{ tabBarLabel: "Favoritos", headerTitle: "Favoritos" }}
+        component={FavoriteNavigation}
+        options={{
+          tabBarLabel: "Favoritos",
+          headerTitle: "Favoritos",
+          headerShown: false,
+        }}
       />
       <Tab.Screen
         name="Pokedex"
