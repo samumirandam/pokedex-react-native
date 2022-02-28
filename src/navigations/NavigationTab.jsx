@@ -9,6 +9,8 @@ import PokedexScreen from "../screens/PokedexScreen";
 import FavoritesScreen from "../screens/FavoritesScreen";
 import AccountScreen from "../screens/AccountScreen";
 
+import { getRamdomPokemonColorType } from "../utils/getColorByPokemonType";
+
 const Tab = createBottomTabNavigator();
 
 export default function NavigationTab() {
@@ -33,7 +35,7 @@ export default function NavigationTab() {
       // invert-mode girar 90° y queda como pokeball
       return <Ionicons name={iconName} size={size} color={color} />;
     },
-    tabBarActiveTintColor: "firebrick",
+    tabBarActiveTintColor: getRamdomPokemonColorType(),
     tabBarInactiveTintColor: "gray",
     // headerShown: false,
   });

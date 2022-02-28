@@ -1,14 +1,12 @@
-import { Text, SafeAreaView } from "react-native";
+import { Text, View } from "react-native";
 import React from "react";
 
+import useAuth from "../hooks/useAuth";
+
+import LoginForm from "../components/Auth/LoginForm";
+import UserData from "../components/Auth/UserData";
+
 export default function AccountScreen() {
-  return (
-    <SafeAreaView>
-      <Text>Account</Text>
-      <Text>Account</Text>
-      <Text>Account</Text>
-      <Text>Account</Text>
-      <Text>Account</Text>
-    </SafeAreaView>
-  );
+  const { auth } = useAuth();
+  return <View>{auth ? <UserData /> : <LoginForm />}</View>;
 }
