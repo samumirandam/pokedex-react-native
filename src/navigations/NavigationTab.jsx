@@ -41,7 +41,7 @@ export default function NavigationTab() {
   });
 
   return (
-    <Tab.Navigator screenOptions={screenOptions}>
+    <Tab.Navigator screenOptions={screenOptions} initialRouteName="Pokedex">
       <Tab.Screen
         name="Favorites"
         component={FavoriteNavigation}
